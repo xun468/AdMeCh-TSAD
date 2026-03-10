@@ -28,5 +28,20 @@ conda install pytorch==2.1.2 pytorch-cuda=12.1 -c pytorch -c nvidia
 ### Additional dependencies: 
 - `jupyter` (either notebook or lab) 
 
+## Datasets 
+Datasets used in the project can be acquired from the following sources: 
+
+SWaT : https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/ On request from iTrust labs. 
+
+WaDI : https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/ On request from iTrust labs. 
+
+SMAP/MSL : https://www.kaggle.com/datasets/patrickfleith/nasa-anomaly-detection-dataset-smap-msl
+
+SMD : https://www.kaggle.com/datasets/mgusat/smd-onmiad
+
+UCR : https://wu.renjie.im/research/anomaly-benchmarks-are-flawed/#ucr-time-series-anomaly-archive
+
+The expected filestructure can be seen in `datasets\`
+
 ## Usage 
 Examples of how experiments and evaluations are run can be found in `AdMeChTSAD.ipynb` 
