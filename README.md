@@ -31,9 +31,9 @@ conda install pytorch==2.1.2 pytorch-cuda=12.1 -c pytorch -c nvidia
 ## Datasets 
 Datasets used in the project can be acquired from the following sources: 
 
-SWaT : https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/ On request from iTrust labs. 
+SWaT : https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/ On request from iTrust labs. We use `SWaT_Dataset_Attack_v0.csv` and `SWaT_Dataset_Normal_v1.csv` from `SWaT.A1 & A2_Dec 2015`
 
-WaDI : https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/ On request from iTrust labs. 
+WaDI : https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/ On request from iTrust labs. We use `WADI_14days.csv` and `WADI_attackdata.csv` from `WaDi.A1_9 Oct 2017` 
 
 SMAP/MSL : https://www.kaggle.com/datasets/patrickfleith/nasa-anomaly-detection-dataset-smap-msl
 
