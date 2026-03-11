@@ -41,7 +41,7 @@ SMD : https://www.kaggle.com/datasets/mgusat/smd-onmiad
 
 UCR : https://wu.renjie.im/research/anomaly-benchmarks-are-flawed/#ucr-time-series-anomaly-archive
 
-The expected filestructure can be seen in `datasets\`
+The expected filestructure can be seen in `datasets\`. Dataloading is handled in `utils\preprocess.py`
 
 ## Usage 
-Examples of how experiments and evaluations are run can be found in `AdMeChTSAD.ipynb`. Dataloading is handled in `utils\preprocess.py`
+Examples of how experiments and evaluations are run can be found in `AdMeChTSAD.ipynb`. 
