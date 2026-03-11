@@ -44,4 +44,4 @@ UCR : https://wu.renjie.im/research/anomaly-benchmarks-are-flawed/#ucr-time-seri
 The expected filestructure can be seen in `datasets\`
 
 ## Usage 
-Examples of how experiments and evaluations are run can be found in `AdMeChTSAD.ipynb` 
+Examples of how experiments and evaluations are run can be found in `AdMeChTSAD.ipynb`. Dataloading is handled in `utils\preprocess.py`
