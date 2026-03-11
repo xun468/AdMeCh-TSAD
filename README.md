@@ -8,7 +8,7 @@ Recommended requirements to install and run:
 
 ### Clone repo: 
 ```bash
-git clone [https://github.com/TheDatumOrg/TSB-AD.git](https://github.com/xun468/AdMeCh-TSAD.git)
+git clone https://github.com/TheDatumOrg/TSB-AD.git](https://github.com/xun468/AdMeCh-TSAD.git
 ```
 
 ### Create Environment: 
