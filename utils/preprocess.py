@@ -45,7 +45,7 @@ def read_swat(*args):
     return normal, attack, labels
     
 def read_wadi(*args):
-    normal = pd.read_csv("datasets/wadi/WADI_14days_new.csv", sep=',', skip_blank_lines=True)#, nrows=1000)  
+    normal = pd.read_csv("datasets/wadi/WADI_14days.csv", sep=',', skip_blank_lines=True)#, nrows=1000)  
     #remove sensor warm-up period 
     normal = normal.iloc[21600:]
     
