@@ -26,9 +26,9 @@ class LSTMVAE(nn.Module):
         self.hidden_dim = hidden_dim
         self.latent_dim = latent_dim
 
-        self.encoder = nn.LSTM(input_dim, hidden_dim, 1, batch_first=True, bidirectional=False)    
+        self.encoder = nn.LSTM(input_dim, hidden_dim, 2, batch_first=True, bidirectional=False)    
         
-        self.decoder = nn.LSTM(latent_dim, hidden_dim, 1, batch_first=True, bidirectional=False)    
+        self.decoder = nn.LSTM(latent_dim, hidden_dim, 2, batch_first=True, bidirectional=False)    
 
         self.mean = nn.Linear(self.hidden_dim, self.latent_dim)
         self.var = nn.Linear(self.hidden_dim, self.latent_dim)
@@ -116,7 +116,7 @@ def test(model, test_loader, loss_fn):
             scores += score                
             labels += y.cpu().tolist()  
 
-    return flatten(scores), flatten(labels)
+    return scores, labels
 
 
 def lstmvae_experiment(train_loader, val_loader, test_loader, args):
@@ -137,7 +137,7 @@ def lstmvae_experiment(train_loader, val_loader, test_loader, args):
         train(model, optimizer, train_loader, loss_fn)
         val_losses = val(model, val_loader, loss_fn)
         if args['verbose']:
-            print('Epoch {:d} Val Loss: {:f}'.format(i,val_losses))
+            print('Epoch %d Val Loss: %f' % (i,val_losses))
         if val_losses < best_val:
             best_val = val_losses 
             best_model_state_dict = copy.deepcopy(model.state_dict())
@@ -146,11 +146,5 @@ def lstmvae_experiment(train_loader, val_loader, test_loader, args):
 
     model.load_state_dict(torch.load(args['experiment_dir'] + "/" + model_name + ".pth"))
     scores, labels = test(model, test_loader,loss_fn)
-    
-    thresh, auc = ROC(labels, scores)
-    metrics_dict = {
-    "model" : [model_name], 
-    "metric" : ["auc-roc"],
-    "score" : [auc]}
-    
-    return metrics_dict
+
+    return flatten(labels), flatten(scores)

@@ -3,7 +3,7 @@ import torch
 import numpy as np 
 import os 
 import pandas as pd 
-from sklearn.metrics import roc_curve, roc_auc_score
+from sklearn.metrics import roc_curve, roc_auc_score, precision_recall_curve, auc
 
 class seq_data(Dataset):
     def __init__(self, data, seq_len, labels = None):
@@ -49,19 +49,28 @@ def save_metrics(metrics, args):
 
     return metrics_df
 
-def ROC(y_test, y_pred, verbose = True):     
+def ROC(y_test, y_pred):     
     if False in np.isfinite(y_pred):
         print("infinity detected")
         y_pred = np.nan_to_num(y_pred)
         
-    fpr,tpr,thresholds=roc_curve(y_test,y_pred)
-    gmeans = np.sqrt(tpr * (1-fpr))
-    idx = np.argmax(gmeans)
-    auc=roc_auc_score(y_test,y_pred)
-    
-    if verbose:
-        print('Best ROC Threshold=%f, G-Means=%.3f, AUC=%.3f' % (thresholds[idx], gmeans[idx],auc))
-    return thresholds[idx], auc
+    # fpr,tpr,thresholds=roc_curve(y_test,y_pred)
+    # gmeans = np.sqrt(tpr * (1-fpr))
+    # idx = np.argmax(gmeans)
+    auc_roc =roc_auc_score(y_test,y_pred)
+        
+    return auc_roc
+
+def PRC(y_test, y_pred):
+    if False in np.isfinite(y_pred):
+        print("infinity detected")
+        y_pred = np.nan_to_num(y_pred)
+        
+    precision, recall, _ = precision_recall_curve(y_test, y_pred)
+    auc_prc = auc(recall, precision)
+
+    return auc_prc
+
 
 def make_window(data, seq_len, labels = None):
     data_w = []

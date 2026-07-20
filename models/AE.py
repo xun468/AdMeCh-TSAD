@@ -92,7 +92,7 @@ def test(model, test_loader, loss_fn):
     # print(len(scores))
     # print(len(labels))
 
-    return flatten(scores), flatten(labels)
+    return scores, labels
 
 def ae_experiment(train_loader, val_loader, test_loader, args):
     model_name = "ae" 
@@ -111,7 +111,7 @@ def ae_experiment(train_loader, val_loader, test_loader, args):
         train(model, optimizer, train_loader, loss_fn)
         val_losses = val(model, val_loader, loss_fn)
         if args['verbose']:
-            print('Epoch {:d} Val Loss: {:f}'.format(i,val_losses))
+            print('Epoch %d Val Loss: %f' % (i,val_losses))
         if val_losses < best_val:
             best_val = val_losses 
             best_model_state_dict = copy.deepcopy(model.state_dict())
@@ -121,11 +121,7 @@ def ae_experiment(train_loader, val_loader, test_loader, args):
     model.load_state_dict(torch.load(args['experiment_dir'] + "/" + model_name + ".pth"))
     scores, labels = test(model, test_loader,loss_fn)
     
-    thresh, auc = ROC(labels, scores)
-    metrics_dict = {
-    "model" : [model_name], 
-    "metric" : ["auc-roc"],
-    "score" : [auc]}
     
-    return metrics_dict
+    return flatten(labels), flatten(scores)
+
 

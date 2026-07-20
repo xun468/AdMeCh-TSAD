@@ -149,7 +149,7 @@ def testing(model, test_loader, seq_len, alpha=.5, beta=.5):
                 
             labels += y.cpu().tolist()    
 
-    return flatten(scores), flatten(labels)
+    return scores, labels
 
 def evaluate(model, val_loader, n):
     outputs = [model.validation_step(to_device(batch.float().flatten(1),device), n) for batch in val_loader]
@@ -166,9 +166,6 @@ def usad_experiment(train_loader, val_loader, test_loader, args):
     w_size=args['seq_len']*args['input_dim']
     z_size=args['seq_len']*hidden_dim
 
-    print(w_size)
-    print(z_size)
-
     model = UsadModel(w_size, z_size, args['seq_len'], args['input_dim'])
     model = to_device(model,device)
 
@@ -178,11 +175,5 @@ def usad_experiment(train_loader, val_loader, test_loader, args):
     model.load_state_dict(best_model_state_dict)
 
     scores, labels = testing(model, test_loader, args['seq_len'])
-
-    thresh, auc = ROC(labels, scores)
-    metrics_dict = {
-    "model" : [model_name], 
-    "metric" : ["auc-roc"],
-    "score" : [auc]}
     
-    return metrics_dict
+    return flatten(labels), flatten(scores)

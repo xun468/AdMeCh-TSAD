@@ -18,19 +18,10 @@ def pca_test(pca, inputs):
 def pca_experiment(train_data, test_data, test_labels, args):
     model_name = 'pca'
     print("Evaluating " + model_name)
-    test_data_w, test_labels_w = make_window(test_data, args['seq_len'], test_labels)
+    test_data_w, labels = make_window(test_data, args['seq_len'], test_labels)
     
-    pca = PCA(n_components="mle")
+    pca = PCA()
     _ = pca.fit_transform(train_data)      
     scores = pca_test(pca, test_data_w) 
 
-    scores = flatten(scores)
-    labels = flatten(test_labels_w)
-
-    thresh, auc = ROC(labels, scores)
-    metrics_dict = {
-    "model" : [model_name], 
-    "metric" : ["auc-roc"],
-    "score" : [auc]}
-    
-    return metrics_dict
+    return flatten(labels), flatten(scores)

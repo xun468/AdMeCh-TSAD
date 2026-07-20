@@ -110,7 +110,7 @@ def test(model, test_loader, loss_fn):
             scores += score                
             labels += y.cpu().tolist()  
 
-    return flatten(scores), flatten(labels)
+    return scores, labels
 
 
 def vae_experiment(train_loader, val_loader, test_loader, args):
@@ -141,10 +141,4 @@ def vae_experiment(train_loader, val_loader, test_loader, args):
     model.load_state_dict(torch.load(args['experiment_dir'] + "/" + model_name + ".pth"))
     scores, labels = test(model, test_loader,loss_fn)
     
-    thresh, auc = ROC(labels, scores)
-    metrics_dict = {
-    "model" : [model_name], 
-    "metric" : ["auc-roc"],
-    "score" : [auc]}
-    
-    return metrics_dict
+    return flatten(labels), flatten(scores)

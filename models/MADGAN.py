@@ -209,7 +209,7 @@ def test(generator, discriminator, latent_dim, test_loader, lmbda = 0.5):
     labels = torch.cat(labels, axis = 0).tolist()
     anomaly_scores = torch.cat(anomaly_scores, axis = 0).tolist()    
 
-    return flatten(labels),flatten(anomaly_scores)
+    return labels, anomaly_scores
     
 def madgan_experiment(train_loader, val_loader, test_loader, args):
     model_name = "madgan"
@@ -230,32 +230,35 @@ def madgan_experiment(train_loader, val_loader, test_loader, args):
     discriminator = discriminator.to(device)
     optimizer_d = torch.optim.Adam(discriminator.parameters())
     optimizer_g = torch.optim.Adam(generator.parameters())
-
+    
+    patience = 0
     best_val = 10000
     for i in range(args['num_epochs']):
         losses = train(generator, discriminator, latent_dim, optimizer_d, optimizer_g, 
           train_loader, loss_fn, 1, 3)
         
         d_losses, g_losses = val(generator, discriminator, latent_dim, val_loader, loss_fn)
-
+        
+        patience += 1
+        
         if d_losses < best_val and best_val - d_losses > 1e-5:
             best_val = d_losses 
             torch.save({"generator" : generator.state_dict(), "discriminator" : discriminator.state_dict()}, args['experiment_dir'] + "/" + model_name + ".pth")
-
+            patience = 0
+            
         if(args['verbose']):
-            print('Epoch {:d} Val Loss: {:f}'.format(i,d_losses))
-
+            print('Epoch %d Val Loss: %f' % (i,d_losses))
+            
+        if patience == 10:
+            print("Hit patience at epoch " + str(i))
+            break
+    
+    
     checkpoint = torch.load(args['experiment_dir'] + "/" + "madgan" + ".pth", weights_only=True)
 
     generator.load_state_dict(checkpoint["generator"])
     discriminator.load_state_dict(checkpoint["discriminator"])
 
     labels, scores = test(generator, discriminator, latent_dim, test_loader)
-    thresh, auc = ROC(labels, scores)
 
-    metrics_dict = {
-    "model" : [model_name], 
-    "metric" : ["auc-roc"],
-    "score" : [auc]}
-
-    return metrics_dict
+    return flatten(labels), flatten(scores)
