@@ -45,3 +45,22 @@ The expected filestructure can be seen in `datasets\`. Dataloading is handled in
 
 ## Usage 
 Examples of how experiments and evaluations are run can be found in `AdMeChTSAD.ipynb`. 
+
+### Citation 
+```
+﻿@Article{Xu2026,
+author={Xu, Nancy
+and Bostr{\"o}m, Henrik},
+title={Addressing Methodological Challenges in Time Series Anomaly Detection},
+journal={Machine Learning},
+year={2026},
+month={Oct},
+day={13},
+volume={115},
+number={10},
+pages={247},
+issn={1573-0565},
+doi={10.1007/s10994-026-07183-y},
+url={https://doi.org/10.1007/s10994-026-07183-y}
+}
+```
