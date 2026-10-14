@@ -46,7 +46,7 @@ The expected filestructure can be seen in `datasets\`. Dataloading is handled in
 ## Usage 
 Examples of how experiments and evaluations are run can be found in `AdMeChTSAD.ipynb`. 
 
-### Citation 
+## Citation 
 ```
 ﻿@Article{Xu2026,
 author={Xu, Nancy
